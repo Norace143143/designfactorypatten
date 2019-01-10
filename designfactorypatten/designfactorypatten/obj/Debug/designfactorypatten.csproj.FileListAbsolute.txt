@@ -1,0 +1,11 @@
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\bin\Debug\designfactorypatten.exe.config
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\bin\Debug\designfactorypatten.exe
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\bin\Debug\designfactorypatten.pdb
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csprojAssemblyReference.cache
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.Form1.resources
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.Properties.Resources.resources
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csproj.GenerateResource.cache
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csproj.CoreCompileInputs.cache
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.exe
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.pdb
+C:\Users\naresh1\source\repos\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.Form2.resources
