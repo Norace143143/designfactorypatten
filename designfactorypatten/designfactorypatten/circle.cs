@@ -7,23 +7,27 @@ using System.Threading.Tasks;
 
 namespace designfactorypatten
 {
+    /// <summary>
+    /// this class is for circle
+    /// inheritance abstract class
+    /// draw the circle using graphic 
+    /// </summary>
     class circle : abstractshape
     {
+        //declareing the variable 
         public int x, y, r1, r2;
-
+        //constructor
         public circle()
         {
-           /* this.x = x;
-            this.y = y;
-            this.r1 = r1;
-            this.r1 = r2;*/
+         
         }
+        //method for drawing 
         public override void draw(Graphics g)
         {
             Pen p = new Pen(Color.White, 3);
             g.DrawEllipse(p, x, y, r1, r2);
         }
-
+        //method for setting the parameter
         public override void set(int[] parameter)
         {
             x = parameter[0];

@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 
 namespace designfactorypatten
 {
+    /// <summary>
+    /// this class is a interface 
+    /// all method are described 
+    /// </summary>
     interface Shapes
     {
+        //method for setting the parameter 
         void set(int[] parameter);
-
+        //method for drawing 
         void draw(Graphics g);
 
-        //void rectangle(int x, int y, int width, int height);
-        //void circle(int x, int y, int r1, int r2);
-        //void triangle(int x1, int x2, int x3, int y1, int y2, int y3);
+       
 
     }
 }

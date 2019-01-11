@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace designfactorypatten
 {
+    /// <summary>
+    /// this class is for triangle 
+    /// inheritance abstract class
+    /// draw the triangle using graphic 
+    /// </summary>
     class triangle : abstractshape
     {
+        //declaring the variable 
         public int x1, x2, x3, y1, y2, y3;
-
+        //constructor
         public triangle()
         {
         }
-
+        //method for drawing 
         public override void draw(Graphics g)
         {
             Pen p = new Pen(Color.White, 3);
@@ -25,7 +31,7 @@ namespace designfactorypatten
             g.DrawPolygon(p, point);
 
         }
-
+        //method for setting the parameter
         public override void set(int[] parameter)
         {
             x1 = parameter[0];

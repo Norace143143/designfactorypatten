@@ -7,23 +7,33 @@ using System.Threading.Tasks;
 
 namespace designfactorypatten
 {
+    /// <summary>
+    /// this class is a factory calss 
+    /// parameter is passed 
+    /// if command check and return shape 
+    /// </summary>
     class shapefactory
     {
         public abstractshape GetName(string shapetype)
         {
-            
+            //variable to collect passed parameter
             string shapetypename = shapetype;
-
+            //checking the passed parameter 
             if (shapetypename.Equals("Rectangle", StringComparison.OrdinalIgnoreCase))
             {
+                //returning the class
                 return new rectangle();
             }
+            //checking the passed parameter 
             else if (shapetypename.Equals("Triangle", StringComparison.OrdinalIgnoreCase))
             {
+                //returning the class
                 return new triangle();
             }
+            //checking the passed parameter 
             else if (shapetypename.Equals("Circle", StringComparison.OrdinalIgnoreCase))
             {
+                //returning the class
                 return new circle();
             }
             else
