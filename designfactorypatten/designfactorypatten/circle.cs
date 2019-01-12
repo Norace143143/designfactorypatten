@@ -14,7 +14,7 @@ namespace designfactorypatten
     /// </summary>
     class circle : abstractshape
     {
-        //declareing the variable 
+        //declaring the variable 
         public int x, y, r1, r2;
         //constructor
         public circle()

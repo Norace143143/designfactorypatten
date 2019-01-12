@@ -25,6 +25,11 @@ namespace designfactorypatten
         //globel array variable are created 
         public int[] parameter = new int[4];
         public int[] Tparameter = new int[6];
+        public int[] recpar = new int[2];
+        public int[] cirpar = new int[2];
+        public int[] tripar = new int[4];
+        public int counter = 0,  width = 0, height = 0, radius1 = 0, p = 0, h = 0 ;
+        public string rec = null;
         //instance of shapefactory 
         shapefactory f = new shapefactory();
         //instance of hashtable 
@@ -101,7 +106,13 @@ namespace designfactorypatten
                 //validation for command syntax 
                 if (collect[0].Equals("DrawTo", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Repeat", StringComparison.OrdinalIgnoreCase) ||
                    collect[0].Equals("Rectangle", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Triangle", StringComparison.OrdinalIgnoreCase) ||
-                   collect[0].Equals("Circle", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("var", StringComparison.OrdinalIgnoreCase))
+                   collect[0].Equals("Circle", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("var", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Rec", StringComparison.OrdinalIgnoreCase)||
+                   collect[0].Equals("width", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("height", StringComparison.OrdinalIgnoreCase)||
+                   collect[0].Equals("endloop", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("cir", StringComparison.OrdinalIgnoreCase)||
+                   collect[0].Equals("radius", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("tri", StringComparison.OrdinalIgnoreCase)||
+                   collect[0].Equals("p", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("h", StringComparison.OrdinalIgnoreCase)||
+                   collect[0].Equals("If", StringComparison.OrdinalIgnoreCase))
                 {
 
                     //for drawto command
@@ -544,7 +555,166 @@ namespace designfactorypatten
                             }
                         }
                     }
-                                     
+
+                    //loop command
+                    if (collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("inside loop");
+                        counter = Convert.ToInt32(collect[1]);
+                    }
+                    //loop command for rectangle 
+                    if (collect[0].Equals("Rec", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("inside rec");
+                        rec = "Rectangle";
+                        recpar[0] = Convert.ToInt32(collect[1]);
+                        recpar[1] = Convert.ToInt32(collect[2]);
+
+                    }
+                    //loop command for circle
+                    if (collect[0].Equals("cir", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("inside cir");
+                        rec = "Circle";
+                        cirpar[0] = Convert.ToInt32(collect[1]);
+                        cirpar[1] = Convert.ToInt32(collect[2]);
+
+                    }
+                    //loop command for triangle
+                    if (collect[0].Equals("tri", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("inside tri");
+                        rec = "Triangle";
+                        tripar[0] = Convert.ToInt32(collect[1]);
+                        tripar[1] = Convert.ToInt32(collect[2]);
+                        tripar[2] = Convert.ToInt32(collect[3]);
+                        tripar[3] = Convert.ToInt32(collect[4]);
+
+                    }
+                    //collecting width
+                    if (collect[0].Equals("width", StringComparison.OrdinalIgnoreCase))
+                    { 
+                        width = Convert.ToInt32(collect[2]);
+                        MessageBox.Show("width:"+width);
+                    }
+                    //collecting height
+                    if (collect[0].Equals("height", StringComparison.OrdinalIgnoreCase))
+                    {
+                        height = Convert.ToInt32(collect[2]);
+                        MessageBox.Show("height:" + height);
+                    }
+                    //collecting radius
+                    if (collect[0].Equals("radius", StringComparison.OrdinalIgnoreCase))
+                    {
+                        radius1 = Convert.ToInt32(collect[2]);
+                        MessageBox.Show("radius:" + radius1);
+                    }
+                    //collecting base 
+                    if (collect[0].Equals("p", StringComparison.OrdinalIgnoreCase))
+                    {
+                        p = Convert.ToInt32(collect[2]);
+                        MessageBox.Show("p:" + p);
+                    }
+                    //collecting hypotenuse 
+                    if (collect[0].Equals("h", StringComparison.OrdinalIgnoreCase))
+                    {
+                        h = Convert.ToInt32(collect[2]);
+                        MessageBox.Show("h:" + h);
+                    }
+
+                    if (collect[0].Equals("endloop",StringComparison.OrdinalIgnoreCase))
+                    {
+                        //checking rec
+                        if (rec.Equals("Rectangle", StringComparison.OrdinalIgnoreCase))
+
+                        {
+
+                            for (int y = 0; y < counter; y++)
+                            {
+                                MessageBox.Show("inside loop");
+                                //intance of abstract class
+                                abstractshape abs = f.GetName("Rectangle");
+                                if (y == 0)
+                                {
+                                    parameter[2] = recpar[0] + width;
+                                    parameter[3] = recpar[1] + height;
+                                }
+                                else
+                                {
+                                    parameter[2] = parameter[2] + width;
+                                    parameter[3] = parameter[3] + height;
+                                }
+                                abs.set(parameter);
+                                abs.draw(e.Graphics);
+                            }
+                        }
+                        //checking cir
+                        if (rec.Equals("Circle", StringComparison.OrdinalIgnoreCase))
+
+                        {
+
+                            for (int y = 0; y < counter; y++)
+                            {
+                                MessageBox.Show("inside loop");
+                                //intance of abstract class
+                                abstractshape abs = f.GetName("Circle");
+                                if (y == 0)
+                                {
+                                    parameter[2] = cirpar[0] + radius1;
+                                    parameter[3] = cirpar[1] + radius1;
+                                }
+                                else
+                                {
+                                    parameter[2] = parameter[2] + radius1;
+                                    parameter[3] = parameter[3] + radius1;
+                                }
+                                abs.set(parameter);
+                                abs.draw(e.Graphics);
+                            }
+                        }
+                        //checking for tri
+                        if (rec.Equals("Triangle", StringComparison.OrdinalIgnoreCase))
+
+                        {
+
+                            for (int y = 0; y < counter; y++)
+                            {
+                                MessageBox.Show("inside loop");
+                                //intance of abstract class
+                                abstractshape abs = f.GetName("Triangle");
+                                if (y == 0)
+                                {
+                                    Tparameter[2] = tripar[0] + p;
+                                    Tparameter[3] = tripar[1] + p;
+                                    Tparameter[4] = tripar[2] + h;
+                                    Tparameter[5] = tripar[3] + h;
+                                }
+                                else
+                                {
+                                    Tparameter[2] = Tparameter[2] + p;
+                                    Tparameter[3] = Tparameter[3] + p;
+                                    Tparameter[4] = Tparameter[4] + h;
+                                    Tparameter[5] = Tparameter[5] + h;
+                                }
+                                abs.set(Tparameter);
+                                abs.draw(e.Graphics);
+                            }
+                        }
+
+                    }
+                  
+                    //for if command
+                    if (collect[0].Equals("If", StringComparison.OrdinalIgnoreCase))
+                    {
+                        
+                        if (counter == Convert.ToInt32(collect[3]))
+                        {
+                        
+                            radius1 = Convert.ToInt32(collect[7]);
+                            MessageBox.Show("r:"+radius1);
+                        }
+                    }     
+                   
                 }
          
                 else
