@@ -36,6 +36,11 @@ namespace designfactorypatten
                 //returning the class
                 return new circle();
             }
+            else if (shapetypename.Equals("POLYGON", StringComparison.OrdinalIgnoreCase))
+            {
+                //returning the class
+                return new polygon(); //creating instance of polygon
+            }
             else
             {
 

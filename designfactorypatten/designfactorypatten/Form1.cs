@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,11 @@ namespace designfactorypatten
         //globel array variable are created 
         public int[] parameter = new int[4];
         public int[] Tparameter = new int[6];
+        public int[] cab = new int[10];
         public int[] recpar = new int[2];
         public int[] cirpar = new int[2];
         public int[] tripar = new int[4];
-        public int counter = 0,  width = 0, height = 0, radius1 = 0, p = 0, h = 0, ifcounter = 0;
+        public int counter = 0, width = 0, height = 0, radius1 = 0, p = 0, h = 0, ifcounter = 0;
         public string rec = null;
         //instance of shapefactory 
         shapefactory f = new shapefactory();
@@ -67,12 +69,69 @@ namespace designfactorypatten
         private void button3_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
+            panel2.Invalidate();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            Stream myStream = null;//instantiating null value for stra
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();//creating a instance of a dialog box
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; //creting text form
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)//if choose data is fine then enter todialog box
+            {
+                try
+                {
+                    if ((myStream = openFileDialog1.OpenFile()) != null) //if the choosen file is not empty then the file is read
+                    {
+                        using (myStream) //dispose is done automatically
+                        {
+                            richTextBox1.Text = File.ReadAllText(openFileDialog1.FileName);//loading text file in textbox
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
+            panel1.Show();
+
         }
+
+        private async void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            SaveFileDialog sfd = new SaveFileDialog();//creating a instance of a dialog box
+            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; //creting text form
+            sfd.RestoreDirectory = true;
+
+            if (sfd.ShowDialog() == DialogResult.OK)//if choose data is fine then enter todialog box
+            {
+                try
+                {
+
+                    using (StreamWriter write = new StreamWriter(sfd.FileName)) //dispose is done automatically
+                    {
+                        await write.WriteLineAsync(richTextBox1.Text);//loading text file in textbox
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
+
+        }
+
+        
+
+    
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -108,18 +167,20 @@ namespace designfactorypatten
                 //each line is splited 
                 string[] collect = readrichbox[i].Split(syntaxchar);
 
+          
                 //validation for command syntax 
                 if (collect[0].Equals("DrawTo", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Repeat", StringComparison.OrdinalIgnoreCase) ||
                    collect[0].Equals("Rectangle", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Triangle", StringComparison.OrdinalIgnoreCase) ||
                    collect[0].Equals("Circle", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("var", StringComparison.OrdinalIgnoreCase) ||
-                   collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Rec", StringComparison.OrdinalIgnoreCase)||
-                   collect[0].Equals("width", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("height", StringComparison.OrdinalIgnoreCase)||
-                   collect[0].Equals("endloop", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("cir", StringComparison.OrdinalIgnoreCase)||
-                   collect[0].Equals("radius", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("tri", StringComparison.OrdinalIgnoreCase)||
-                   collect[0].Equals("p", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("h", StringComparison.OrdinalIgnoreCase)||
-                   collect[0].Equals("if")|| collect[0].Equals("endIf", StringComparison.OrdinalIgnoreCase)||collect[0].Equals("IF"))
+                   collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("Rec", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("width", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("height", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("endloop", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("cir", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("radius", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("tri", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("p", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("h", StringComparison.OrdinalIgnoreCase) ||
+                   collect[0].Equals("if") || collect[0].Equals("endIf", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("IF")||
+                   collect[0].Equals("POLYGON", StringComparison.OrdinalIgnoreCase))
                 {
-
+                
                     //for drawto command
                     if (collect[0].Equals("DrawTo", StringComparison.OrdinalIgnoreCase))
                     {
@@ -168,6 +229,29 @@ namespace designfactorypatten
                         {
                             Tparameter[0] = Convert.ToInt32(hs[collect[1]]);
                             Tparameter[1] = Convert.ToInt32(hs[collect[2]]);
+                        }
+                        //try and catch block
+                        try
+                        {
+                            cab[0] = Convert.ToInt32(hs[collect[1]]);
+                            cab[1] = Convert.ToInt32(hs[collect[2]]);
+                            
+                        }
+                        catch
+                        {
+                            cab[0] = Convert.ToInt32(collect[1]);
+                            cab[1] = Convert.ToInt32(collect[2]);
+                        }
+                        //try and catch block
+                        try
+                        {
+                            cab[0] = Convert.ToInt32(collect[1]);
+                            cab[1] = Convert.ToInt32(collect[2]);
+                        }
+                        catch
+                        {
+                            cab[0] = Convert.ToInt32(hs[collect[1]]);
+                            cab[1] = Convert.ToInt32(hs[collect[2]]);
                         }
 
                     }
@@ -380,8 +464,90 @@ namespace designfactorypatten
                         }
                     }
 
+                    //for polygon command
+                    if (collect[0].Equals("POLYGON", StringComparison.OrdinalIgnoreCase))
+                    {
+                        abstractshape abs = f.GetName("POLYGON");
+
+                        try
+                        {
+                            cab[2] = Convert.ToInt32(hs[collect[1]]);
+                            cab[3] = Convert.ToInt32(hs[collect[2]]);
+                            cab[4] = Convert.ToInt32(hs[collect[3]]);
+                            cab[5] = Convert.ToInt32(hs[collect[4]]);
+                            cab[6] = Convert.ToInt32(hs[collect[5]]);
+                            cab[7] = Convert.ToInt32(hs[collect[6]]);
+                            cab[8] = Convert.ToInt32(hs[collect[7]]);
+                            cab[9] = Convert.ToInt32(hs[collect[8]]);
+                        }
+
+                        catch
+                        {
+                            cab[2] = Convert.ToInt32(collect[1]);
+                            cab[3] = Convert.ToInt32(collect[2]);
+                            cab[4] = Convert.ToInt32(collect[3]);
+                            cab[5] = Convert.ToInt32(collect[4]);
+                            cab[6] = Convert.ToInt32(collect[5]);
+                            cab[7] = Convert.ToInt32(collect[6]);
+                            cab[8] = Convert.ToInt32(collect[7]);
+                            cab[9] = Convert.ToInt32(collect[8]);
+                        }
+
+                        try
+                        {
+                            cab[2] = Convert.ToInt32(collect[1]);
+                            cab[3] = Convert.ToInt32(collect[2]);
+                            cab[4] = Convert.ToInt32(collect[3]);
+                            cab[5] = Convert.ToInt32(collect[4]);
+                            cab[6] = Convert.ToInt32(collect[5]);
+                            cab[7] = Convert.ToInt32(collect[6]);
+                            cab[8] = Convert.ToInt32(collect[7]);
+                            cab[9] = Convert.ToInt32(collect[8]);
+                        }
+                        catch
+                        {
+                            cab[2] = Convert.ToInt32(hs[collect[1]]);
+                            cab[3] = Convert.ToInt32(hs[collect[2]]);
+                            cab[4] = Convert.ToInt32(hs[collect[3]]);
+                            cab[5] = Convert.ToInt32(hs[collect[4]]);
+                            cab[6] = Convert.ToInt32(hs[collect[5]]);
+                            cab[7] = Convert.ToInt32(hs[collect[6]]);
+                            cab[8] = Convert.ToInt32(hs[collect[7]]);
+                            cab[9] = Convert.ToInt32(hs[collect[8]]);
+                        }
+
+
+                        abs.set(cab);
+                        abs.draw(e.Graphics);
+
+                    }
+
+                    else if (collect[0].Equals("var", StringComparison.OrdinalIgnoreCase)) //variable command set up
+                    {
+                        if (collect[2].Equals("=") && collect[4].Equals(":"))
+                        {
+                            int From = readrichbox[i].IndexOf("var") + "var".Length;
+                            int To = readrichbox[i].LastIndexOf("=");
+
+                            String res = readrichbox[i].Substring(From, To - From).Replace(" ", String.Empty);
+
+                            int From1 = readrichbox[i].IndexOf("=") + "=".Length;
+                            int To1 = readrichbox[i].LastIndexOf(":");
+
+                            int res1 = Int32.Parse(readrichbox[i].Substring(From1, To1 - From1).Replace(" ", String.Empty));
+                            try
+                            {
+                                hs.Add(res, res1);
+                            }
+                            catch (Exception x)
+                            {
+                                hs[res] = res1;
+                            }
+                        }
+                    }
+
                     //for repeat command
-                    if (collect[0].Equals("Repeat", StringComparison.OrdinalIgnoreCase)|| collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase))
+                    if (collect[0].Equals("Repeat", StringComparison.OrdinalIgnoreCase) || collect[0].Equals("loop", StringComparison.OrdinalIgnoreCase))
                     {
                         //initializing new parameter for rectangle and circle
                         int[] newpar = new int[4];
@@ -572,7 +738,7 @@ namespace designfactorypatten
                         rec = "Rectangle";
                         recpar[0] = Convert.ToInt32(collect[1]);
                         recpar[1] = Convert.ToInt32(collect[2]);
-                       
+
                     }
                     //loop command for circle
                     if (collect[0].Equals("cir", StringComparison.OrdinalIgnoreCase))
@@ -594,36 +760,36 @@ namespace designfactorypatten
                     }
                     //collecting width
                     if (collect[0].Equals("width", StringComparison.OrdinalIgnoreCase))
-                    { 
+                    {
                         width = Convert.ToInt32(collect[2]);
-                       
+
                     }
                     //collecting height
                     if (collect[0].Equals("height", StringComparison.OrdinalIgnoreCase))
                     {
                         height = Convert.ToInt32(collect[2]);
-                        
+
                     }
                     //collecting radius
                     if (collect[0].Equals("radius", StringComparison.OrdinalIgnoreCase))
                     {
                         radius1 = Convert.ToInt32(collect[2]);
-                       
+
                     }
                     //collecting base 
                     if (collect[0].Equals("p", StringComparison.OrdinalIgnoreCase))
                     {
                         p = Convert.ToInt32(collect[2]);
-                        
+
                     }
                     //collecting hypotenuse 
                     if (collect[0].Equals("h", StringComparison.OrdinalIgnoreCase))
                     {
                         h = Convert.ToInt32(collect[2]);
-                        
+
                     }
 
-                    if (collect[0].Equals("endloop",StringComparison.OrdinalIgnoreCase))
+                    if (collect[0].Equals("endloop", StringComparison.OrdinalIgnoreCase))
                     {
                         //checking rec
                         if (rec.Equals("Rectangle", StringComparison.OrdinalIgnoreCase))
@@ -635,15 +801,15 @@ namespace designfactorypatten
                                 abstractshape abs = f.GetName("Rectangle");
                                 if (y == 0)
                                 {
-                                        parameter[2] = recpar[0] + width;
-                                        parameter[3] = recpar[1] + height;
-                                                                     
+                                    parameter[2] = recpar[0] + width;
+                                    parameter[3] = recpar[1] + height;
+
                                 }
                                 else
                                 {
-                                        parameter[2] = parameter[2] + width;
-                                        parameter[3] = parameter[3] + height;
-                                    
+                                    parameter[2] = parameter[2] + width;
+                                    parameter[3] = parameter[3] + height;
+
                                 }
                                 abs.set(parameter);
                                 abs.draw(e.Graphics);
@@ -704,31 +870,31 @@ namespace designfactorypatten
                         }
 
                     }
-                  
+
                     //for simple if command
                     if (collect[0].Equals("if"))
                     {
-                       
+
                         if (counter == Convert.ToInt32(collect[3]))
                         {
                             if (collect[5].Equals("radius", StringComparison.OrdinalIgnoreCase))
                             {
                                 radius1 = Convert.ToInt32(collect[7]);
-                                
+
                             }
 
                             if (collect[5].Equals("width", StringComparison.OrdinalIgnoreCase))
                             {
                                 width = Convert.ToInt32(collect[7]);
-                                
+
                             }
 
                             if (collect[5].Equals("height", StringComparison.OrdinalIgnoreCase))
                             {
                                 height = Convert.ToInt32(collect[7]);
-                                
+
                             }
-                           
+
                         }
                     }
 
@@ -742,7 +908,7 @@ namespace designfactorypatten
                     }
 
                     if (collect[0].Equals("endIf", StringComparison.OrdinalIgnoreCase))
-                       {
+                    {
                         if (counter == ifcounter)
                         {
                             //checking rec
@@ -800,17 +966,18 @@ namespace designfactorypatten
                         }
                     }
 
+
                 }
 
-                    else
+
+                else
                 {
-                    //displaying the error
-                    MessageBox.Show("error");
+                    throw new errorhandle();
                 }
 
-                
-            }
 
+
+            }
         }
     
     }
