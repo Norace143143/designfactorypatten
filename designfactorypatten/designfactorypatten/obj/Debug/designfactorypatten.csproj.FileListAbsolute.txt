@@ -20,3 +20,7 @@ C:\ide\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csp
 C:\ide\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csproj.CoreCompileInputs.cache
 C:\ide\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.exe
 C:\ide\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.pdb
+C:\ide\designfactorypatten\designfactorypatten\bin\Debug\nunit.framework.dll
+C:\ide\designfactorypatten\designfactorypatten\bin\Debug\nunit.framework.pdb
+C:\ide\designfactorypatten\designfactorypatten\bin\Debug\nunit.framework.xml
+C:\ide\designfactorypatten\designfactorypatten\obj\Debug\designfactorypatten.csproj.CopyComplete

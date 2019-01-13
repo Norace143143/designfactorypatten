@@ -31,7 +31,13 @@ namespace designfactorypatten
         public int[] cirpar = new int[2];
         public int[] tripar = new int[4];
         public int counter = 0, width = 0, height = 0, radius1 = 0, p = 0, h = 0, ifcounter = 0;
+        int n = -1;
+        int m = -1;
+        bool moving = false;
+        Pen pn;
         public string rec = null;
+        //drawing object
+        Graphics g;
         //instance of shapefactory 
         shapefactory f = new shapefactory();
         //instance of hashtable 
@@ -40,8 +46,15 @@ namespace designfactorypatten
         public Form1()
         {
             InitializeComponent();
+            //creating the canvas panel2
+            g = panel2.CreateGraphics();
+            //making line smooth
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            pn = new Pen(Color.Black, 3);
             //panel2 is hide
             panel1.Hide();
+            //making pen round at start and end
+            pn.StartCap = pn.EndCap = System.Drawing.Drawing2D.LineCap.Round;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -100,6 +113,51 @@ namespace designfactorypatten
                 }
             }
             panel1.Show();
+
+        }
+        //additional feature
+        //this method is calling picture box
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            PictureBox p = (PictureBox)sender;
+            pn.Color = p.BackColor;
+        }
+        //event when mouse is clicked 
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            moving = true;
+            n = e.X;
+            m = e.Y;
+            panel2.Cursor = Cursors.Cross;
+        }
+        //event when mouse is moving
+        private void panel2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(moving && n!=-1 && m != -1)
+            {
+                g.DrawLine(pn, new Point(n, m), e.Location);
+                n = e.X;
+                m = e.Y;
+                
+            }
+        }
+        //event when mouse is not clicked 
+        private void panel2_MouseUp(object sender, MouseEventArgs e)
+        {
+            moving = false;
+            n = -1;
+            m = -1;
+            panel2.Cursor = Cursors.Default;
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
 

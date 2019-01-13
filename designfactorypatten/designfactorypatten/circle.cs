@@ -30,10 +30,18 @@ namespace designfactorypatten
         //method for setting the parameter
         public override void set(int[] parameter)
         {
-            x = parameter[0];
-            y = parameter[1];
-            r1 = parameter[2];
-            r2 = parameter[3];
+            if (check(parameter) == 4)
+            {
+                x = parameter[0];
+                y = parameter[1];
+                r1 = parameter[2];
+                r2 = parameter[3];
+            }
+        }
+
+        public int check(int[] a)
+        {
+            return a.Length;
         }
     }
 }
